@@ -1,4 +1,5 @@
 import argparse
+import json
 
 
 def main():
@@ -7,18 +8,17 @@ def main():
     )
     parser.add_argument("first_file")
     parser.add_argument("second_file")
-    parser.add_argument(
-        "-f", "--format",
-        help="set format of output"
-    )
+    parser.add_argument("-f", "--format", help="set format of output")
 
     args = parser.parse_args()
 
-    # Пока заглушка
-    print(f"First file: {args.first_file}")
-    print(f"Second file: {args.second_file}")
-    if args.format:
-        print(f"Format: {args.format}")
+    # Читаем файлы (как советуют в задании)
+    data1 = json.load(open(args.first_file))
+    data2 = json.load(open(args.second_file))
+
+    # Пока просто выводим
+    print("File 1:", data1)
+    print("File 2:", data2)
 
 
 if __name__ == "__main__":
