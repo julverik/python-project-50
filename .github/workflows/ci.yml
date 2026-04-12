@@ -8,12 +8,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v6.0.0
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e49802e8e  # v6.0.0
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
@@ -37,7 +37,7 @@ jobs:
         run: make test-coverage
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@aa23f6cecfefec641a3ac137b917b77f163a8432  # v7.0.0
+        uses: SonarSource/sonarqube-scan-action@v7.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
