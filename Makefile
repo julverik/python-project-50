@@ -11,7 +11,10 @@ package-install:
 	uv tool install dist/*.whl
 
 lint:
-	ruff check gendiff tests
+	uv run ruff check gendiff tests
 
 test:
-	pytest tests/
+	uv run pytest tests/
+
+test-coverage:
+	uv run pytest --cov=gendiff --cov-report=xml:coverage.xml tests/
