@@ -2,6 +2,29 @@ import argparse
 import json
 
 
+def generate_diff(file_path1, file_path2):
+    data1 = json.load(open(file_path1))
+    data2 = json.load(open(file_path2))
+
+    all_keys = sorted(set(data1.keys()) | set(data2.keys()))
+
+    result_lines = ['{']
+
+    for key in all_keys:
+        if key not in data1:
+            result_lines.append(f'  + {key}: {data2[key]}')
+        elif key not in data2:
+            result_lines.append(f'  - {key}: {data1[key]}')
+        elif data1[key] == data2[key]:
+            result_lines.append(f'    {key}: {data1[key]}')
+        else:
+            result_lines.append(f'  - {key}: {data1[key]}')
+            result_lines.append(f'  + {key}: {data2[key]}')
+
+    result_lines.append('}')
+    return '\n'.join(result_lines)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Compares two configuration files and shows a difference."
@@ -12,13 +35,8 @@ def main():
 
     args = parser.parse_args()
 
-    # Читаем файлы (как советуют в задании)
-    data1 = json.load(open(args.first_file))
-    data2 = json.load(open(args.second_file))
-
-    # Пока просто выводим
-    print("File 1:", data1)
-    print("File 2:", data2)
+    diff = generate_diff(args.first_file, args.second_file)
+    print(diff)
 
 
 if __name__ == "__main__":
