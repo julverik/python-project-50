@@ -12,3 +12,11 @@ def test_generate_diff_flat_json():
     result = generate_diff(file1, file2)
     expected = read_fixture('result_flat.txt')
     assert result == expected
+
+
+def test_generate_diff_flat_yaml():
+    file1 = 'tests/fixtures/file1_flat.yml'
+    file2 = 'tests/fixtures/file2_flat.yml'
+    result = generate_diff(file1, file2)
+    expected = read_fixture('result_flat.txt')
+    assert result == expected
