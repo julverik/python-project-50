@@ -1,35 +1,19 @@
 import argparse
 
+from gendiff.diff_create import create_diff
+from gendiff.formatters.stylish import stylish
 from gendiff.parser import parse_file
 
 
-def format_value(value):
-    if isinstance(value, bool):
-        return str(value).lower()
-    return value
-
-
-def generate_diff(file_path1, file_path2):
+def generate_diff(file_path1, file_path2, format_name='stylish'):
     data1 = parse_file(file_path1)
     data2 = parse_file(file_path2)
 
-    all_keys = sorted(set(data1.keys()) | set(data2.keys()))
+    diff = create_diff(data1, data2)
 
-    result_lines = ['{']
-
-    for key in all_keys:
-        if key not in data1:
-            result_lines.append(f'  + {key}: {format_value(data2[key])}')
-        elif key not in data2:
-            result_lines.append(f'  - {key}: {format_value(data1[key])}')
-        elif data1[key] == data2[key]:
-            result_lines.append(f'    {key}: {format_value(data1[key])}')
-        else:
-            result_lines.append(f'  - {key}: {format_value(data1[key])}')
-            result_lines.append(f'  + {key}: {format_value(data2[key])}')
-
-    result_lines.append('}')
-    return '\n'.join(result_lines)
+    if format_name == 'stylish':
+        return stylish(diff)
+    return stylish(diff)
 
 
 def main():
@@ -38,11 +22,15 @@ def main():
     )
     parser.add_argument("first_file")
     parser.add_argument("second_file")
-    parser.add_argument("-f", "--format", help="set format of output")
+    parser.add_argument(
+        "-f", "--format",
+        default="stylish",
+        help="set format of output"
+    )
 
     args = parser.parse_args()
 
-    diff = generate_diff(args.first_file, args.second_file)
+    diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
 
 
