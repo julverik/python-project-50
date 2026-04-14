@@ -52,3 +52,11 @@ def test_generate_diff_plain_nested_yaml():
     result = generate_diff(file1, file2, 'plain')
     expected = read_fixture('result_plain.txt')
     assert result == expected
+
+
+def test_generate_diff_json_nested():
+    file1 = 'tests/fixtures/file1_nested.json'
+    file2 = 'tests/fixtures/file2_nested.json'
+    result = generate_diff(file1, file2, 'json')
+    expected = read_fixture('result_json.json')
+    assert result == expected
