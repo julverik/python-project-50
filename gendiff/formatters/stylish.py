@@ -4,7 +4,7 @@ def format_value(value, depth=0):
     if value is None:
         return 'null'
     if value == "":
-        return '""'
+        return ''
     if isinstance(value, dict):
         indent = '    ' * (depth + 1)
         lines = ['{']
@@ -24,20 +24,20 @@ def stylish(diff, depth=0):
         status = node['status']
 
         if status == 'nested':
-            children = stylish(node["children"], depth + 1)
+            children = stylish(node['children'], depth + 1)
             lines.append(f'{indent}    {key}: {children}')
         elif status == 'added':
-            value = format_value(node["value"], depth)
+            value = format_value(node['value'], depth)
             lines.append(f'{indent}  + {key}: {value}')
         elif status == 'removed':
-            value = format_value(node["value"], depth)
+            value = format_value(node['value'], depth)
             lines.append(f'{indent}  - {key}: {value}')
         elif status == 'unchanged':
-            value = format_value(node["value"], depth)
+            value = format_value(node['value'], depth)
             lines.append(f'{indent}    {key}: {value}')
         elif status == 'changed':
-            old_value = format_value(node["old_value"], depth)
-            new_value = format_value(node["new_value"], depth)
+            old_value = format_value(node['old_value'], depth)
+            new_value = format_value(node['new_value'], depth)
             lines.append(f'{indent}  - {key}: {old_value}')
             lines.append(f'{indent}  + {key}: {new_value}')
 

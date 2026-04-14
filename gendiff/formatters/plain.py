@@ -6,6 +6,8 @@ def format_value(value):
     if isinstance(value, dict):
         return '[complex value]'
     if isinstance(value, str):
+        if value == "":
+            return "''"
         return f"'{value}'"
     return value
 
